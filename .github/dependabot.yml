@@ -9,3 +9,16 @@ updates:
     directory: /
     schedule:
       interval: daily
+    groups:
+      # eslint-plugin-github 経由の typescript-eslint と版を揃えないと peer 解決に失敗するため一括で上げる
+      typescript-eslint:
+        patterns:
+          - "@typescript-eslint/*"
+          - typescript-eslint
+    ignore:
+      # @typescript-eslint の peer 範囲が typescript <6.1.0 のため、対応するまで上げない
+      - dependency-name: typescript
+        versions: [">=6.1.0"]
+      # 実行環境の Node 24 に型定義を合わせる
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
